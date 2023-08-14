@@ -15,22 +15,6 @@ import ru.kata.spring.boot_security.demo.services.UserService;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
-//    private PersonDetaliesServices personDetaliesServices;
-//    @Autowired
-//    public WebSecurityConfig(PersonDetaliesServices personDetaliesServices) {
-//        this.personDetaliesServices = personDetaliesServices;
-//    }
-//
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.userDetailsService(personDetaliesServices);
-//    }
-//
-//    @Bean
-//    public PasswordEncoder getPasswordEncoder(){
-//        return NoOpPasswordEncoder.getInstance();
-//    }
-
     private final SuccessUserHandler successUserHandler;
     private final UserService userService;
 
