@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <title>User by ID</title>
+</head>
+<body>
+<table class="table table-dark">
+  <thead>
+  <tr>
+    <th scope="col">ID</th>
+    <th scope="col">Username</th>
+    <th scope="col">Password</th>
+    <th scope="col">Name</th>
+    <th scope="col">Age</th>
+    <th scope="col">Role</th>
+    <th scope="col">Update</th>
+    <th scope="col">Delete</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td th:text="${userId.getId()}"/>
+    <td th:text="${userId.getUsername()}"/>
+    <td th:text="${userId.getPassword()}"/>
+    <td th:text="${userId.getName()}"/>
+    <td th:text="${userId.getAge()}"/>
+    <td th:text="${userId.getRoles()}"/>
+    <td><a th:href="@{/admin/{id}/edit (id=${userId.getId()})}">Update</a></td>
+    <td>
+      <form th:method="DELETE" th:action="@{/admin/{id} (id=${userId.getId()})}">
+        <input type="submit" value="Delete"/>
+      </form>
+    </td>
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>
