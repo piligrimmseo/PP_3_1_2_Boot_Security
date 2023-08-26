@@ -26,7 +26,7 @@ public class AdminController {
 
     @GetMapping
     public String index(Model model) {
-        model.addAttribute("users", userService.index());
+        model.addAttribute("users", userService.getAllUsers());
         return "users";
     }
 
@@ -40,19 +40,19 @@ public class AdminController {
 
     @PostMapping
     public String create(@ModelAttribute("user") User user) {
-        userService.save(user);
+        userService.saveUser(user);
         return "redirect:/admin";
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
-        model.addAttribute("userId", userService.show(id));
+        model.addAttribute("userId", userService.showUserById(id));
         return "id";
     }
 
     @GetMapping("/{id}/edit")
     public String edit(Model model, @PathVariable("id") int id) {
-        model.addAttribute("user", userService.show(id));
+        model.addAttribute("user", userService.showUserById(id));
         List<Role> roles = (List<Role>) roleRepository.findAll();
         model.addAttribute("allRoles", roles);
         return "edit";
@@ -60,13 +60,13 @@ public class AdminController {
 
     @PatchMapping("/{id}")
     public String update(@ModelAttribute("person") User user, @PathVariable("id") int id) {
-        userService.update(id, user);
+        userService.updateUserById(id, user);
         return "redirect:/admin";
     }
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id) {
-        userService.delete(id);
+        userService.deleteUserById(id);
         return "redirect:/admin";
     }
 

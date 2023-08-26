@@ -10,19 +10,21 @@ import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.repositories.RoleRepository;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Component
 public class DatabaseInitializer implements ApplicationListener<ContextRefreshedEvent> {
 
     private RoleRepository roleRepository;
     private UserRepository userRepository;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     public DatabaseInitializer(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -36,12 +38,15 @@ public class DatabaseInitializer implements ApplicationListener<ContextRefreshed
         adminRole.setName("ROLE_ADMIN");
         roleRepository.save(adminRole);
 
-        List<Role> userRoles = Arrays.asList(userRole);
-        List<Role> adminRoles = Arrays.asList(adminRole, userRole);
+        Set<Role> userRoles = new HashSet<>();
+        userRoles.add(userRole);
+        Set<Role> adminRoles = new HashSet<>();
+        adminRoles.add(adminRole);
+        adminRoles.add(userRole);
 
         User admin = new User();
         admin.setUsername("admin");
-        admin.setPassword("12345");
+        admin.setPassword(passwordEncoder.encode("12345"));
         admin.setRoles(adminRoles);
         admin.setAge(32);
         admin.setName("Ivan");
@@ -50,7 +55,7 @@ public class DatabaseInitializer implements ApplicationListener<ContextRefreshed
 
         User user = new User();
         user.setUsername("user");
-        user.setPassword("54321");
+        user.setPassword(passwordEncoder.encode("54321"));
         user.setRoles(userRoles);
         user.setAge(32);
         user.setName("Kirill");
